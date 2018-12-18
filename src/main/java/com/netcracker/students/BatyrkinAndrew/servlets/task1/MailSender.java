@@ -1,4 +1,4 @@
-package com.netcracker.students.BatyrkinAndrew.servlet;
+package com.netcracker.students.BatyrkinAndrew.servlets.task1;
 
 import com.netcracker.students.BatyrkinAndrew.help.Mailer;
 
@@ -21,6 +21,8 @@ public class MailSender extends HttpServlet {
         String cc = req.getParameter("cc");
         String subject = req.getParameter("subject");
         String message = req.getParameter("message");
+
+        req.setAttribute("reciever", "andrey.batyrkin@gmail.com");
 
         Mailer.send(reciever, cc, subject, message);
 

@@ -9,16 +9,14 @@ public class Mailer {
 
     public static void send(String reciever, String cc, String subject, String message) {
 
-        final String user = "servlet.fake@mail.ru";//change accordingly
-        final String pass = "1234567p";
+        final String user = "myemail.ForSmth.tests@gmail.com";
+        final String pass = "itisjustMYpassword";
 
-//1st step - Get the session object
         Properties props = new Properties();
-        props.put("mail.transport.protocol", "smtp");
-        props.put("mail.smtp.host", "smtp.mail.ru");//change accordingly
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.port", "465");
-
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", "smtp.gmail.com");
+        props.put("mail.smtp.port", "587");
 
         Session session = Session.getDefaultInstance(props,
                 new Authenticator() {
@@ -26,16 +24,18 @@ public class Mailer {
                         return new PasswordAuthentication(user, pass);
                     }
                 });
-//2nd step - compose message
+//      compose message
         try {
             MimeMessage mess = new MimeMessage(session);
             mess.setFrom(new InternetAddress(user));
             mess.addRecipient(Message.RecipientType.TO, new InternetAddress(reciever));
-            if (!cc.equals("")) { mess.addRecipient(Message.RecipientType.CC, new InternetAddress(cc));}
+            if (!cc.equals("")) {
+                mess.addRecipient(Message.RecipientType.CC, new InternetAddress(cc));
+            }
             mess.setSubject(subject);
             mess.setText(message);
 
-            //3rd step)send message
+//          send message
             Transport.send(mess);
 
             System.out.println("Done");
@@ -47,7 +47,7 @@ public class Mailer {
     }
 }
 
-//        final String user = "servlet.fake@mail.ru";
+//        final String user = "servlets.fake@mail.ru";
 //        final String pass = "1234567p";
 //
 //        Properties props = new Properties();

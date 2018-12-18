@@ -22,7 +22,7 @@ public class SessionTracking extends HttpServlet{
         Date lastAccessTime = new Date(session.getLastAccessedTime());
 
         String title = "Welcome Back to my website";
-        Integer visitCount = new Integer(0);
+        Integer visitCount = 0;
         String visitCountKey = new String("visitCount");
         String userIDKey = new String("userID");
         String userID = new String("ABCD");
@@ -41,16 +41,16 @@ public class SessionTracking extends HttpServlet{
         PrintWriter out = response.getWriter();
 
         StringBuilder sb = new StringBuilder("<html>");
-        sb.append("<head><title>"+title+"</head></title>");
+        sb.append("<head><title>").append(title).append("</head></title>");
         sb.append("<body>");
 
-        sb.append("<h1>"+ "Visit count: "+visitCount+"</h1><br>");
-        sb.append("<h1>"+ "Visit count key: "+visitCountKey+"</h1><br>");
-        sb.append("<h1>"+ "UserId key: "+userIDKey+"</h1><br>");
-        sb.append("<h1>"+ "UserId: "+userID+"</h1><br>");
-        sb.append("<h1>"+ "Create time: "+createTime+"</h1><br>");
-        sb.append("<h1>"+ "Last access time: "+lastAccessTime+"</h1><br>");
-        sb.append("<h1>"+ "JSESSION_ID: "+ request.getCookies()[0].getValue()+"</h1><br>");
+        sb.append("<h1>" + "Visit count: ").append(visitCount).append("</h1><br>");
+        sb.append("<h1>" + "Visit count key: ").append(visitCountKey).append("</h1><br>");
+        sb.append("<h1>" + "UserId key: ").append(userIDKey).append("</h1><br>");
+        sb.append("<h1>" + "UserId: ").append(userID).append("</h1><br>");
+        sb.append("<h1>" + "Create time: ").append(createTime).append("</h1><br>");
+        sb.append("<h1>" + "Last access time: ").append(lastAccessTime).append("</h1><br>");
+        sb.append("<h1>" + "JSESSION_ID: ").append(request.getCookies()[0].getValue()).append("</h1><br>");
 
         sb.append("</body></html>");
 

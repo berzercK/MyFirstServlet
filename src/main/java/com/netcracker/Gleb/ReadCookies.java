@@ -14,8 +14,8 @@ public class ReadCookies extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        Cookie cookie = null;
-        Cookie[] cookies = null;
+        Cookie cookie;
+        Cookie[] cookies;
 
         cookies = request.getCookies();
         response.setContentType("text/html");
@@ -27,10 +27,10 @@ public class ReadCookies extends HttpServlet {
         if( cookies != null ) {
             sb.append("<h2> Found Cookies Name and Value</h2>");
 
-            for (int i = 0; i < cookies.length; i++) {
-                cookie = cookies[i];
-                sb.append("Name : " + cookie.getName( ) + ",  ");
-                sb.append("Value: " + cookie.getValue( ) + " <br/>");
+            for (Cookie cookie1 : cookies) {
+                cookie = cookie1;
+                sb.append("Name : ").append(cookie.getName()).append(",  ");
+                sb.append("Value: ").append(cookie.getValue()).append(" <br/>");
             }
         } else {
             sb.append("<h2>No cookies founds</h2>");

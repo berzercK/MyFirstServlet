@@ -1,4 +1,4 @@
-package com.netcracker.students.BatyrkinAndrew.servlet;
+package com.netcracker.students.BatyrkinAndrew.servlets.task1;
 
 import com.netcracker.students.BatyrkinAndrew.help.Accounts;
 import com.netcracker.students.BatyrkinAndrew.help.MyRequest;
@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+@SuppressWarnings("Duplicates")
 @WebServlet("/tasks/task1/login_servlet")
 public class Login extends HttpServlet {
 
@@ -24,9 +25,9 @@ public class Login extends HttpServlet {
 
         String login = request.getParameter("login");
         String password = request.getParameter("password");
-
+        Accounts.init(getServletContext().getRealPath("/WEB-INF/classes/users.txt"));
 //        statusOut(out, login, password);
-        out.println(new MyRequest(Accounts.isValidData(new Profile(login, password))).getOut());
+        out.println(new MyRequest(Accounts.isValidData(new Profile(login, password)), login).getOut());
 
         out.close();
     }

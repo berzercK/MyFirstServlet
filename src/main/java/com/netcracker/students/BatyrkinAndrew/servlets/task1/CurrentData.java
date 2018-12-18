@@ -1,4 +1,4 @@
-package com.netcracker.students.BatyrkinAndrew.servlet;
+package com.netcracker.students.BatyrkinAndrew.servlets.task1;
 
 import com.netcracker.students.BatyrkinAndrew.help.Info;
 

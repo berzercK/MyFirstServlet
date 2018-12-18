@@ -1,4 +1,4 @@
-package com.netcracker.students.BatyrkinAndrew.servlet;
+package com.netcracker.students.BatyrkinAndrew.servlets.task1;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
