@@ -21,6 +21,7 @@ public class SessionTracking extends HttpServlet {
         HttpSession session = request.getSession(true);
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
+        String isRemeber = request.getParameter("remember");
 
         Accounts.init(getServletContext().getRealPath("/WEB-INF/classes/users.txt"));
 
@@ -37,57 +38,65 @@ public class SessionTracking extends HttpServlet {
         String newLogin = "";
         String newPassword = "";
 
-        if (session.isNew()) {
-            session.setAttribute(loginKey, login);
-            session.setAttribute(passwordKey, password);
-            session.setAttribute(isSuccessValidKey, false);
-
-            login = request.getParameter("login");
-            password = request.getParameter("password");
-            isValidData = Accounts.isValidData(new Profile(login, password));
-            if (isValidData[0] && isValidData[1]) {
-                isSuccessValid = true;
-            }
-            if (isSuccessValid) {
+        if (isRemeber == null) {
+            check(out, request.getParameter("login"), request.getParameter("password"));
+        } else {
+            if (session.isNew()) {
                 session.setAttribute(loginKey, login);
                 session.setAttribute(passwordKey, password);
-                session.setAttribute(isSuccessValidKey, true);
-            } else {
                 session.setAttribute(isSuccessValidKey, false);
-            }
-        } else {
-            newLogin = request.getParameter("login");
-            newPassword = request.getParameter("password");
 
-            if (newLogin.length() == 0 && newPassword.length() == 0) {
-                if (isSuccessValid = (boolean) session.getAttribute(isSuccessValidKey)) {
-                    login = (String) session.getAttribute(loginKey);
-                    password = (String) session.getAttribute(passwordKey);
-                    out.println(new MyRequest(Accounts.isValidData(new Profile(login, password)), login).
-                            getOut());
-//                    out.println(new MyRequest(true, login).getOut());
+                login = request.getParameter("login");
+                password = request.getParameter("password");
+                isValidData = Accounts.isValidData(new Profile(login, password));
+                if (isValidData[0] && isValidData[1]) {
+                    isSuccessValid = true;
+                }
+                if (isSuccessValid) {
+                    session.setAttribute(loginKey, login);
+                    session.setAttribute(passwordKey, password);
+                    session.setAttribute(isSuccessValidKey, true);
+                } else {
+                    session.setAttribute(isSuccessValidKey, false);
                 }
             } else {
-                if (!Accounts.isValidLogin(newLogin)) {
-                    response.sendRedirect("/tasks/task2/create_account.html");
+                newLogin = request.getParameter("login");
+                newPassword = request.getParameter("password");
+
+                if (newLogin.length() == 0 && newPassword.length() == 0) {
+                    if (isSuccessValid = (boolean) session.getAttribute(isSuccessValidKey)) {
+                        login = (String) session.getAttribute(loginKey);
+                        password = (String) session.getAttribute(passwordKey);
+                        out.println(new MyRequest(Accounts.isValidData(new Profile(login, password)), login).
+                                getOut());
+//                    out.println(new MyRequest(true, login).getOut());
+                    }
                 } else {
-                    isValidDataNewProfile = Accounts.isValidData(new Profile(newLogin, newPassword));
-                    if (isValidDataNewProfile[0] && isValidDataNewProfile[1]) {
-                        isSuccessValid = true;
-                    }
-                    if (isSuccessValid) {
-                        session.setAttribute(loginKey, newLogin);
-                        session.setAttribute(passwordKey, newPassword);
-                        session.setAttribute(isSuccessValidKey, true);
+                    if (!Accounts.isValidLogin(newLogin)) {
+                        response.sendRedirect("/tasks/task2/create_account.html");
                     } else {
-                        session.setAttribute(isSuccessValidKey, false);
+                        isValidDataNewProfile = Accounts.isValidData(new Profile(newLogin, newPassword));
+                        if (isValidDataNewProfile[0] && isValidDataNewProfile[1]) {
+                            isSuccessValid = true;
+                        }
+                        if (isSuccessValid) {
+                            session.setAttribute(loginKey, newLogin);
+                            session.setAttribute(passwordKey, newPassword);
+                            session.setAttribute(isSuccessValidKey, true);
+                        } else {
+                            session.setAttribute(isSuccessValidKey, false);
+                        }
+                        out.println(new MyRequest(Accounts.isValidData(new Profile(newLogin, newPassword)), newLogin).getOut());
                     }
-                    out.println(new MyRequest(Accounts.isValidData(new Profile(newLogin, newPassword)), newLogin).
-                            getOut());
                 }
             }
         }
         out.close();
+    }
+
+    private void check(PrintWriter out, String login, String password) {
+        Accounts.init(getServletContext().getRealPath("/WEB-INF/classes/users.txt"));
+        out.println(new MyRequest(Accounts.isValidData(new Profile(login, password)), login).getOut());
     }
 
 }

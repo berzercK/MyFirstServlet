@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/cookies")
+//@WebServlet("/cookies")
+@WebServlet("/tasks/task2/cookies")
 public class ReadCookies extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)

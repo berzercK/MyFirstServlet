@@ -7,7 +7,7 @@ public class Profile {
     private String password;
 
     public Profile(String login, String password) {
-        if (!login.equals("") && !password.equals("")) {
+        if (!login.equals("") || !password.equals("")) {
             this.login = login;
             this.password = password;
         }

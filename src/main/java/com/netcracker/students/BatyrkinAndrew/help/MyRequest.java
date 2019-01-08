@@ -10,7 +10,7 @@ public class MyRequest {
 
     public MyRequest(boolean isSuccessValid, String login) {
         out = new StringBuilder();
-        if (isSuccessValid) { out.append("Successfully").append("\nWelcome, ").append(login); }
+        if (isSuccessValid) { out.append("Successfully").append("<br> Welcome, ").append(login); }
 //        } else { out.append("Incorrect"); }
     }
 
