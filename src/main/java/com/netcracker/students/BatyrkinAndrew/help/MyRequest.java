@@ -8,9 +8,15 @@ public class MyRequest {
         out = checkData(isValidData, login);
     }
 
+    public MyRequest(boolean isSuccessValid, String login) {
+        out = new StringBuilder();
+        if (isSuccessValid) { out.append("Successfully").append("\nWelcome, ").append(login); }
+//        } else { out.append("Incorrect"); }
+    }
+
     private StringBuilder checkData(boolean[] isValidData, String login) {
         if (!isValidData[0]) {
-            out.append("Incorect login!");
+            out.append("Incorrect login!");
         } else if (!isValidData[1]) {
             out.append("Incorrect password!");
         } else {
