@@ -22,7 +22,6 @@ public class Accounts {
             isInit = true;
             try {
                 FileReader fileReader = new FileReader(path);
-
                 System.out.println("File is read.");
                 Scanner sc = new Scanner(fileReader);
 
@@ -111,21 +110,19 @@ public class Accounts {
         return false;
     }
 
-    /*-------------------------------------Add Profile-----------------------------------------------*/
-
     public static boolean addProfile(Profile profile) {
         if (isNewLogin(profile.getLogin())) {
             justAccounts.add(profile);
-            writeToFile();
+            writeToFile(true);
             return true;
         } else {
             return false;
         }
     }
 
-    private static boolean writeToFile() {
+    private static boolean writeToFile(boolean append) {
         try {
-            FileWriter fileWriter = new FileWriter(path, true);
+            FileWriter fileWriter = new FileWriter(path, append);
             for (int i = lastIndexAccFromFile; i < justAccounts.size(); i++) {
                 fileWriter.write(String.valueOf(justAccounts.get(lastIndexAccFromFile).getLogin()));
                 fileWriter.write(',');
@@ -137,7 +134,6 @@ public class Accounts {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
         return false;
     }
 
@@ -150,6 +146,19 @@ public class Accounts {
         }
         return true;
     }
+
+    public static boolean changePassword(String login, String newPass) {
+        for (Profile p :
+                justAccounts) {
+            if (p.getLogin().equals(login)) {
+                if (!p.getPassword().equals(newPass)) {
+                    p.setPassword(newPass);
+                } else return false;
+            }
+        }
+        return writeToFile(false);
+    }
+
 
     /*-------------------------------------------------------------------------------------------*/
 }
